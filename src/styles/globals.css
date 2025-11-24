@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: "ns-bold";
+    src: url('/fonts/NotoSansKR-Bold.ttf');
+}
+
+@font-face {
+    font-family: "ns-regular";
+    src: url('/fonts/NotoSansKR-Regular.ttf');
+}
+
+@font-face {
+    font-family: "ns-light";
+    src: url('/fonts/NotoSansKR-Light.ttf');
+}
