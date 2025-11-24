@@ -12,6 +12,12 @@ export default {
                 'ns-regular': ['ns-regular', 'sans-serif'],
                 'ns-light': ['ns-light', 'sans-serif'],
             },
+            colors: {
+                'primary': '#0649ed',
+                'red': '#ED0649',
+                'white': '#fefeff',
+                'gray': '#8f9296',
+            },
         },
     },
     plugins: [],
