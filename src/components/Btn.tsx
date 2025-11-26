@@ -11,7 +11,7 @@ export default function Btn({
         <button
             className={`flex justify-center items-center w-fit h-fit px-3 py-1 rounded-md  ${
                 selected
-                    ? "bg-slate-300 text-white"
+                    ? "bg-primary text-white"
                     : "text-gray border border-1 border-slate-300"
             }`}
             onClick={onClick}

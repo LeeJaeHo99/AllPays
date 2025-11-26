@@ -1,6 +1,6 @@
 "use client";
 
-import Btn from "./Btn";
+import Btn from "../../Btn";
 import SelectedDate from "./SelectedDate";
 
 interface PeriodFilterProps {

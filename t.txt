@@ -102,3 +102,7 @@
             <h1 className="text-2xl font-ns-bold text-primary mt-5">상점 상태 조회</h1>
             <p>상점 상태 코드:{data7.code}</p>
             <p>상점 상태 설명:{data7.description}</p>
+
+
+
+결제상태 가게이름 결제수단 결제금액 결제시간
