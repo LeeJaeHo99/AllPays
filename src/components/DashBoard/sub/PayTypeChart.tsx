@@ -31,7 +31,7 @@ export default function PayTypeChart() {
     };
     return (
         <div className="w-[50%] h-full bg-white rounded-lg mb-5 px-4 py-3 shadow-md shadow-slate-500/10">
-            <h2 className="mb-4 text-md font-ns-bold">거래 수단 비율</h2>
+            <h2 className="mb-4 text-md font-ns-bold">거래 수단 비율 & </h2>
             <div className="flex justify-center items-center">
                 <Doughnut
                     data={data}
