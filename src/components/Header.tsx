@@ -5,7 +5,7 @@ import { Menu } from "lucide-react";
 
 export default function Header() {
     return (
-        <header className="fixed top-0 left-0 right-0 z-999 w-full h-20 shadow-md shadow-slate-500/10">
+        <header className="fixed top-0 left-0 right-0 z-999 w-full h-20 bg-white shadow-md shadow-slate-500/10">
             <div className="inner flex items-center justify-between">
                 <Link href="/">
                     <h1 className="flex items-center gap-2">
