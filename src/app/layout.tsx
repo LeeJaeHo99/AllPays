@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "../styles/reset.css";
 import "../styles/globals.css";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
     title: "올페이즈 과제: 이재호",
@@ -19,6 +20,7 @@ export default function RootLayout({
             <body>
                     <Header />
                     {children}
+                    <Footer />
             </body>
         </html>
     );

@@ -46,6 +46,20 @@ function RecentPaymentsItem() {
                 <span className="w-[20%] text-center">100,000원</span>
                 <span className="w-[20%] text-center">2025-01-01 12:00:00</span>
             </div>
+            <div className="flex justify-between items-center mb-2 px-4 py-2 pb-4 text-xs font-ns-regular border-b border-slate-200 border-1 border-solid">
+                <span className="w-[20%] text-center">성공</span>
+                <span className="w-[20%] text-center">포치타 커피</span>
+                <span className="w-[20%] text-center">신용카드</span>
+                <span className="w-[20%] text-center">100,000원</span>
+                <span className="w-[20%] text-center">2025-01-01 12:00:00</span>
+            </div>
+            <div className="flex justify-between items-center mb-2 px-4 py-2 pb-4 text-xs font-ns-regular">
+                <span className="w-[20%] text-center">성공</span>
+                <span className="w-[20%] text-center">포치타 커피</span>
+                <span className="w-[20%] text-center">신용카드</span>
+                <span className="w-[20%] text-center">100,000원</span>
+                <span className="w-[20%] text-center">2025-01-01 12:00:00</span>
+            </div>
         </>
     );
 }
