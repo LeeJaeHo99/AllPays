@@ -12,6 +12,7 @@ import SearchComponent from "@/components/Sub/SearchComponent";
 import Pagination from "@/components/Sub/Pagination";
 import TableFilter from "@/components/Sub/TableFilter";
 import { MerchantsDetails } from "@/types/type";
+import useGetMerchantsList from "@/hooks/getMerchantsList";
 
 export default function MerchantsList() {
     const [merchantsList, setMerchantsList] = useState<MerchantsDetails[]>([]);
@@ -22,6 +23,8 @@ export default function MerchantsList() {
     const [selectedFilter, setSelectedFilter] = useState<string>("all");
     const [searchType, setSearchType] = useState<string>("");
     const [searchValue, setSearchValue] = useState<string>("");
+
+    const { data: merchantsData, isLoading } = useGetMerchantsList();
     
     const handlePreviousPage = () => {
         if (selectedPage > 0) {
@@ -45,28 +48,16 @@ export default function MerchantsList() {
         setSelectedPage(0);
     };
 
+    // getMerchantsList 훅에서 데이터를 가져와서 상태 업데이트
     useEffect(() => {
-        async function fetchData() {
-            try {
-                const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/merchants/details`,
-                    { cache: "force-cache" }
-                );
-                if (!response.ok) {
-                    throw new Error("데이터를 불러오는데 실패했습니다.");
-                }
-                const result = await response.json();
-                const data = result.data || [];
-                setOriginalMerchantsList(data);
-                setAllMerchantsList(data);
-            } catch (error) {
-                setOriginalMerchantsList([]);
-                setAllMerchantsList([]);
-                console.error(error);
-            }
+        if (merchantsData) {
+            setOriginalMerchantsList(merchantsData);
+            setAllMerchantsList(merchantsData);
+        } else {
+            setOriginalMerchantsList([]);
+            setAllMerchantsList([]);
         }
-        fetchData();
-    }, []);
+    }, [merchantsData]);
 
     useEffect(() => {
         let filteredList: MerchantsDetails[] = [...originalMerchantsList];
@@ -146,14 +137,22 @@ export default function MerchantsList() {
                     value={selectedFilter}
                     onChange={handleFilterChange}
                 />
-                <Table
-                    tableHeader={merchantListTableHeader}
-                    tableBody={<MerchantsListTableBody merchantsList={merchantsList} />}
-                />
-                {searchType && searchValue && allMerchantsList.length === 0 && (
-                    <div className="w-full py-8 text-center text-xl font-ns-regular text-rose-500">
-                        검색한 데이터가 존재하지 않습니다.
+                {isLoading ? (
+                    <div className="w-full py-8 text-center text-xl font-ns-regular text-gray">
+                        데이터를 불러오는 중...
                     </div>
+                ) : (
+                    <>
+                        <Table
+                            tableHeader={merchantListTableHeader}
+                            tableBody={<MerchantsListTableBody merchantsList={merchantsList} />}
+                        />
+                        {searchType && searchValue && allMerchantsList.length === 0 && (
+                            <div className="w-full py-8 text-center text-xl font-ns-regular text-rose-500">
+                                검색한 데이터가 존재하지 않습니다.
+                            </div>
+                        )}
+                    </>
                 )}
                 <Pagination
                     length={Math.ceil(allMerchantsList.length / 10)}

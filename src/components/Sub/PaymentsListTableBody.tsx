@@ -19,7 +19,7 @@ export default function PaymentsListTableBody({ paymentList }: { paymentList: Pa
                         {payment.mchtCode}
                     </td>
                     <td
-                        className={`w-[calc(100%/${paymentList.length})] py-4 text-xs font-ns-regular text-gray text-center border-b border-slate-300 border-solid`}
+                        className={`w-[calc(100%/${paymentList.length})] py-4 text-sm font-ns-bold text-black text-center border-b border-slate-300 border-solid`}
                     >
                         {payment.mchtName}
                     </td>

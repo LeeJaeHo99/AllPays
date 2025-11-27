@@ -10,7 +10,7 @@ export default function PaymentsListRadios({
     count: number[];
 }) {
     return (
-        <div className="flex justify-start items-center gap-4 mb-4">
+        <div className="flex justify-start items-center gap-4 w-[70%] mb-4">
             <PaymentsListRadio
                 selected={selected}
                 handleSelect={handleSelect}
