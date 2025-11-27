@@ -27,12 +27,12 @@ http://localhost:3000
 NEXT_PUBLIC_API_URL="https://recruit.paysbypays.com"
 ```
 
-## 🛠 기술 스택
-- Next.js (16.0.3)
-- React (19.2.0)
-- TypeScript (5)
-- React Query (5.90.10)
-- Tailwind CSS (3.4.18)
+## 🛠 기술 스택 / 사용 이유
+- Next.js (16.0.3) / 직관적인 폴더 기반 라우팅울 위하여 사용
+- React (19.2.0) / 컴포넌트 기반 구조로 재사용성과 유지보수성을 높여 UI 개발 효율 극대화를 위해 사용
+- TypeScript (5) / 정적 타입 검사로 런타임 에러를 사전에 방지, 코드 품질 향상
+- React Query (5.90.10) / 서버 상태 관리 자동화(캐싱, 리페치 등)로 비동기 데이터 처리의 복잡도 감소
+- Tailwind CSS (3.4.18) / 별도 CSS 파일 없이, 빠르고 일관성 있는 UI 개발 가능
 
 ## ✨ 구현 기능 요약
 
