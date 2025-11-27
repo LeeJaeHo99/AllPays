@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import Table from "@/components/Sub/Table";
 import {
     merchantListTableHeader,
@@ -16,7 +16,7 @@ import useGetMerchantsList from "@/hooks/getMerchantsList";
 import { useSearchParams } from "next/navigation";
 import { LoaderCircle } from "lucide-react";
 
-export default function MerchantsList() {
+function MerchantsListContent() {
     const searchParams = useSearchParams();
     const [merchantsList, setMerchantsList] = useState<MerchantsDetails[]>([]);
     const [allMerchantsList, setAllMerchantsList] = useState<MerchantsDetails[]>([]);
@@ -29,7 +29,6 @@ export default function MerchantsList() {
 
     const { data: merchantsData, isLoading } = useGetMerchantsList();
     
-    // URL 파라미터 변경 시 검색 상태 업데이트
     useEffect(() => {
         const type = searchParams.get("type") || (searchParams.get("q") ? "mchtName" : "");
         const value = searchParams.get("value") || searchParams.get("q") || "";
@@ -188,5 +187,17 @@ export default function MerchantsList() {
                 />
             </div>
         </>
+    );
+}
+
+export default function MerchantsList() {
+    return (
+        <Suspense fallback={
+            <div className="w-full h-full flex justify-center items-center py-8 text-center text-xl font-ns-regular text-primary">
+                <LoaderCircle size={48} className="animate-spin" />
+            </div>
+        }>
+            <MerchantsListContent />
+        </Suspense>
     );
 }
