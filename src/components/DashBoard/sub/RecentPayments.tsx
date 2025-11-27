@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 
 export default function RecentPayments() {
     return (
@@ -6,7 +7,9 @@ export default function RecentPayments() {
             <div className="flex justify-between items-center mb-4">
                 <h2 className="mb-4 text-2xl font-ns-bold">최근 거래 내역</h2>
                 <button className="flex justify-center items-center text-xs font-ns-regular text-gray hover:text-primary transition-all duration-300">
-                    <span>더보기</span>
+                    <Link href="/paymentsList">
+                        <span>더보기</span>
+                    </Link>
                     <ArrowUpRight size={16} />
                 </button>
             </div>
