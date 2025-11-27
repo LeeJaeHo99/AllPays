@@ -1,17 +1,33 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 
 export default function SearchComponent({ 
     searchList,
-    onSearch
+    onSearch,
+    initialSearchType,
+    initialSearchValue,
+    className = ""
 }: { 
     searchList: { label: string, value: string }[];
     onSearch?: (searchType: string, searchValue: string) => void;
+    initialSearchType?: string;
+    initialSearchValue?: string;
+    className?: string;
 }) {
-    const [searchType, setSearchType] = useState<string>(searchList[0]?.value || "");
-    const [searchValue, setSearchValue] = useState<string>("");
+    const [searchType, setSearchType] = useState<string>(initialSearchType || searchList[0]?.value || "");
+    const [searchValue, setSearchValue] = useState<string>(initialSearchValue || "");
+    
+    // 초기값이 변경되면 상태 업데이트
+    useEffect(() => {
+        if (initialSearchType) {
+            setSearchType(initialSearchType);
+        }
+        if (initialSearchValue !== undefined) {
+            setSearchValue(initialSearchValue);
+        }
+    }, [initialSearchType, initialSearchValue]);
 
     const handleSearch = () => {
         if (onSearch) {
@@ -26,7 +42,7 @@ export default function SearchComponent({
     };
 
     return (    
-        <div className="flex items-center justify-end gap-2 mb-10">
+        <div className={`flex items-center justify-end gap-2 ${className}`}>
             <label htmlFor="searchType" className="relative">
                 <span className="absolute left-0 top-[-20px] text-xs font-ns-regular text-gray">
                     검색 종류
@@ -45,7 +61,13 @@ export default function SearchComponent({
             </label>
             <input
                 type="text"
-                placeholder="검색"
+                placeholder={
+                    searchType === "payType" 
+                        ? "예: ONLINE, MOBILE, DEVICE, VACT, BILLING"
+                        : searchType === "status"
+                        ? "예: SUCCESS, FAILED, CANCELLED, PENDING"
+                        : "검색"
+                }
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
                 onKeyPress={handleKeyPress}

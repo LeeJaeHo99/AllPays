@@ -6,7 +6,8 @@ import Table from "@/components/Sub/Table";
 import Pagination from "@/components/Sub/Pagination";
 import PaymentsListTableBody from "@/components/Sub/PaymentsListTableBody";
 import TableFilter from "@/components/Sub/TableFilter";
-import { paymentListTableHeader, paymentListTableFilter } from "@/data/data";
+import SearchComponent from "@/components/Sub/SearchComponent";
+import { paymentListTableHeader, paymentListTableFilter, paymentListSearchList } from "@/data/data";
 import { useEffect, useState } from "react";
 import { PaymentWithMerchant } from "@/types/type";
 import useGetPaymentsList from "@/hooks/getPaymentsList";
@@ -26,6 +27,8 @@ export default function PaymentsList() {
     const [periodFilteredList, setPeriodFilteredList] = useState<
         PaymentWithMerchant[]
     >([]);
+    const [searchType, setSearchType] = useState<string>("");
+    const [searchValue, setSearchValue] = useState<string>("");
 
     const { data: paymentsData, isLoading } = useGetPaymentsList();
 
@@ -41,6 +44,12 @@ export default function PaymentsList() {
 
     const handlePeriodChange = (period: string) => {
         setSelectedPeriod(period);
+        setSelectedPage(0);
+    };
+
+    const handleSearch = (type: string, value: string) => {
+        setSearchType(type);
+        setSearchValue(value);
         setSelectedPage(0);
     };
 
@@ -68,7 +77,7 @@ export default function PaymentsList() {
         }
     }, [paymentsData]);
 
-    // 기간 필터링된 리스트를 계산하여 periodFilteredList에 저장 (count 계산용)
+    // 기간 필터링 및 검색 필터링된 리스트를 계산하여 periodFilteredList에 저장 (count 계산용)
     useEffect(() => {
         if (!originalPaymentList.length) {
             setPeriodFilteredList([]);
@@ -93,9 +102,26 @@ export default function PaymentsList() {
         }
         // "전체"는 필터링하지 않음
 
-        // 기간 필터링된 리스트 저장 (count 계산용)
+        // 검색 필터링
+        if (searchType && searchValue.trim()) {
+            filteredList = filteredList.filter((payment) => {
+                if (searchType === "mchtName") {
+                    // 상점 이름은 부분 일치 검색
+                    return payment.mchtName?.toLowerCase().includes(searchValue.toLowerCase().trim()) || false;
+                } else if (searchType === "payType") {
+                    // 결제 타입은 정확한 일치 검색
+                    return payment.payType === searchValue.trim().toUpperCase();
+                } else if (searchType === "status") {
+                    // 결제 상태는 정확한 일치 검색
+                    return payment.status === searchValue.trim().toUpperCase();
+                }
+                return true;
+            });
+        }
+
+        // 기간 및 검색 필터링된 리스트 저장 (count 계산용)
         setPeriodFilteredList(filteredList);
-    }, [selectedPeriod, originalPaymentList]);
+    }, [selectedPeriod, originalPaymentList, searchType, searchValue]);
 
     useEffect(() => {
         let filteredList: PaymentWithMerchant[] = [...periodFilteredList];
@@ -166,10 +192,17 @@ export default function PaymentsList() {
     return (
         <>
             <h3 className="mb-4 text-2xl font-ns-bold">거래 내역 전체 조회</h3>
-            <PeriodFilter
-                selectedPeriod={selectedPeriod}
-                onPeriodChange={handlePeriodChange}
-            />
+            <div className="flex justify-between items-end mb-4">
+                <PeriodFilter
+                    selectedPeriod={selectedPeriod}
+                    onPeriodChange={handlePeriodChange}
+                />
+                <SearchComponent
+                    searchList={paymentListSearchList}
+                    onSearch={handleSearch}
+                    className="mb-0"
+                />
+            </div>
             <div className="flex justify-between items-center">
                 <PaymentsListRadios
                     selected={selected}

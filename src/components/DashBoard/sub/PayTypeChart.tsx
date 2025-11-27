@@ -165,6 +165,13 @@ export default function PayTypeChart({ type, selectedPeriod }: PayTypeChartProps
                 tooltip: {
                     position: "nearest" as const,
                     intersect: false,
+                    bodyFont: {
+                        size: 11,
+                    },
+                    titleFont: {
+                        size: 11,
+                    },
+                    padding: 8,
                     callbacks: {
                         label: (context: { label?: string; parsed?: number; dataset: { data: number[] } }) => {
                             const label = context.label || "";
@@ -174,7 +181,7 @@ export default function PayTypeChart({ type, selectedPeriod }: PayTypeChartProps
                                 0
                             );
                             const percentage = ((value / total) * 100).toFixed(1);
-                            return `${label}: ${value}건 (${percentage}%)`;
+                            return `${value}건 (${percentage}%)`;
                         },
                     },
                 },

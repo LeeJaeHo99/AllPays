@@ -10,28 +10,16 @@ export const paymentListTableHeader = [
 
 export const paymentListSearchList = [
     {
-        label: "결제 코드",
-        value: "paymentCode",
-    },
-    {
-        label: "상점 코드",
-        value: "mchtCode",
-    },
-    {
         label: "상점 이름",
         value: "mchtName",
     },
     {
-        label: "금액",
-        value: "amount",
-    },
-    {
-        label: "통화",
-        value: "currency",
-    },
-    {
         label: "결제 타입",
         value: "payType",
+    },
+    {
+        label: "결제 상태",
+        value: "status",
     },
 ];
 
@@ -63,12 +51,12 @@ export const merchantListTableBody = [
 
 export const merchantListSearchList = [
     {
-        label: "상점 코드",
-        value: "mchtCode",
-    },
-    {
         label: "상점 이름",
         value: "mchtName",
+    },
+    {
+        label: "상점 코드",
+        value: "mchtCode",
     },
     {
         label: "상점 상태",

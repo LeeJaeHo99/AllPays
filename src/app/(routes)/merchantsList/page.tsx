@@ -13,8 +13,10 @@ import Pagination from "@/components/Sub/Pagination";
 import TableFilter from "@/components/Sub/TableFilter";
 import { MerchantsDetails } from "@/types/type";
 import useGetMerchantsList from "@/hooks/getMerchantsList";
+import { useSearchParams } from "next/navigation";
 
 export default function MerchantsList() {
+    const searchParams = useSearchParams();
     const [merchantsList, setMerchantsList] = useState<MerchantsDetails[]>([]);
     const [allMerchantsList, setAllMerchantsList] = useState<MerchantsDetails[]>([]);
     const [originalMerchantsList, setOriginalMerchantsList] = useState<MerchantsDetails[]>([]);
@@ -25,6 +27,15 @@ export default function MerchantsList() {
     const [searchValue, setSearchValue] = useState<string>("");
 
     const { data: merchantsData, isLoading } = useGetMerchantsList();
+    
+    // URL 파라미터 변경 시 검색 상태 업데이트
+    useEffect(() => {
+        const type = searchParams.get("type") || (searchParams.get("q") ? "mchtName" : "");
+        const value = searchParams.get("value") || searchParams.get("q") || "";
+        setSearchType(type);
+        setSearchValue(value);
+        setSelectedPage(0);
+    }, [searchParams]);
     
     const handlePreviousPage = () => {
         if (selectedPage > 0) {
@@ -130,6 +141,8 @@ export default function MerchantsList() {
                     <SearchComponent 
                         searchList={merchantListSearchList}
                         onSearch={handleSearch}
+                        initialSearchType={searchType}
+                        initialSearchValue={searchValue}
                     />
                 </div>
                 <TableFilter 

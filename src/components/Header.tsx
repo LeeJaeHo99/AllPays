@@ -70,13 +70,6 @@ export default function Header() {
                     >
                         <span>가맹점 목록</span>
                     </Link>
-                    <Link
-                        href="/calculate"
-                        className="font-ns-bold hover:text-primary transition-colors"
-                        onClick={toggleMenu}
-                    >
-                        <span>정산</span>
-                    </Link>
                 </nav>
             </div>
         </header>
