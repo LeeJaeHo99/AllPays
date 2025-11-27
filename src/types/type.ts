@@ -59,3 +59,29 @@ export interface MchtStatus{
 export interface PaymentWithMerchant extends PaymentList {
     mchtName?: string;
 }
+
+export interface PaymentTotalProps {
+    selectedPeriod: string;
+}
+
+export interface PayMchtRankProps {
+    selectedPeriod: string;
+}
+
+export interface RankItem {
+    mchtName: string;
+    count: number;
+}
+
+export interface PeriodFilterProps {
+    selectedPeriod: string;
+    onPeriodChange: (period: string) => void;
+}
+
+export interface SearchComponentProps {
+    searchList: { label: string; value: string }[];
+    onSearch?: (searchType: string, searchValue: string) => void;
+    initialSearchType?: string;
+    initialSearchValue?: string;
+    className?: string;
+}

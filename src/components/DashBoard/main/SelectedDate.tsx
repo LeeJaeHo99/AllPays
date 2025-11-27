@@ -1,21 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useMemo } from "react";
 
 export default function SelectedDate({ period }: { period: string }) {
-    const [startDate, setStartDate] = useState<string>("");
-    const [endDate, setEndDate] = useState<string>("");
-
-    useEffect(() => {
+    const { startDate, endDate } = useMemo(() => {
         if (period === "전체") {
-            setStartDate("2025-11-01");
-            setEndDate("2025-11-10");
+            return { startDate: "2025-11-01", endDate: "2025-11-10" };
         } else if (period === "1주일") {
-            setStartDate("2025-11-04");
-            setEndDate("2025-11-10");
+            return { startDate: "2025-11-04", endDate: "2025-11-10" };
         } else {
-            setStartDate("2025-11-10");
-            setEndDate("2025-11-10");
+            return { startDate: "2025-11-10", endDate: "2025-11-10" };
         }
     }, [period]);
 

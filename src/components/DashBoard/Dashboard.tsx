@@ -10,7 +10,7 @@ import SearchMerchants from "./sub/SearchMerchants";
 import PayTypeChart from "./sub/PayTypeChart";
 
 export default function Dashboard() {
-    const [selectedPeriod, setSelectedPeriod] = useState("전체");
+    const [selectedPeriod, setSelectedPeriod] = useState<string>("전체");
 
     return (
         <>

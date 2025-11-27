@@ -14,6 +14,7 @@ import TableFilter from "@/components/Sub/TableFilter";
 import { MerchantsDetails } from "@/types/type";
 import useGetMerchantsList from "@/hooks/getMerchantsList";
 import { useSearchParams } from "next/navigation";
+import { LoaderCircle } from "lucide-react";
 
 export default function MerchantsList() {
     const searchParams = useSearchParams();
@@ -32,9 +33,11 @@ export default function MerchantsList() {
     useEffect(() => {
         const type = searchParams.get("type") || (searchParams.get("q") ? "mchtName" : "");
         const value = searchParams.get("value") || searchParams.get("q") || "";
-        setSearchType(type);
-        setSearchValue(value);
-        setSelectedPage(0);
+        setTimeout(() => {
+            setSearchType(type);
+            setSearchValue(value);
+            setSelectedPage(0);
+        }, 0);
     }, [searchParams]);
     
     const handlePreviousPage = () => {
@@ -62,11 +65,15 @@ export default function MerchantsList() {
     // getMerchantsList 훅에서 데이터를 가져와서 상태 업데이트
     useEffect(() => {
         if (merchantsData) {
-            setOriginalMerchantsList(merchantsData);
-            setAllMerchantsList(merchantsData);
+            setTimeout(() => {
+                setOriginalMerchantsList(merchantsData);
+                setAllMerchantsList(merchantsData);
+            }, 0);
         } else {
-            setOriginalMerchantsList([]);
-            setAllMerchantsList([]);
+            setTimeout(() => {
+                setOriginalMerchantsList([]);
+                setAllMerchantsList([]);
+            }, 0);
         }
     }, [merchantsData]);
 
@@ -124,18 +131,22 @@ export default function MerchantsList() {
             );
         }
         
-        setAllMerchantsList(sortedList);
+        setTimeout(() => {
+            setAllMerchantsList(sortedList);
+        }, 0);
     }, [selectedFilter, originalMerchantsList, searchType, searchValue]);
 
     useEffect(() => {
         const start = selectedPage * 10;
         const end = start + 10;
-        setMerchantsList(allMerchantsList.slice(start, end));
+        setTimeout(() => {
+            setMerchantsList(allMerchantsList.slice(start, end));
+        }, 0);
     }, [allMerchantsList, selectedPage]);
 
     return (
         <>
-            <h3 className="mb-4 text-2xl font-ns-bold">가맹점 목록 조회</h3>
+            <h3 className="mb-8 text-2xl font-ns-bold">가맹점 목록 조회</h3>
             <div className="flex flex-col justify-between items-center w-full">
                 <div className="flex justify-end w-full">
                     <SearchComponent 
@@ -143,6 +154,7 @@ export default function MerchantsList() {
                         onSearch={handleSearch}
                         initialSearchType={searchType}
                         initialSearchValue={searchValue}
+                        className="mb-4"
                     />
                 </div>
                 <TableFilter 
@@ -151,8 +163,8 @@ export default function MerchantsList() {
                     onChange={handleFilterChange}
                 />
                 {isLoading ? (
-                    <div className="w-full py-8 text-center text-xl font-ns-regular text-gray">
-                        데이터를 불러오는 중...
+                    <div className="w-full h-full flex justify-center items-center py-8 text-center text-xl font-ns-regular text-primary">
+                        <LoaderCircle size={48} className="animate-spin" />
                     </div>
                 ) : (
                     <>

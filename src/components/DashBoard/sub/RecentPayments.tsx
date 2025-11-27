@@ -1,26 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { ArrowUpRight } from "lucide-react";
+import { useMemo } from "react";
+import { ArrowUpRight, LoaderCircle } from "lucide-react";
 import Link from "next/link";
 import { PaymentWithMerchant } from "@/types/type";
 import RecentPaymentsItem from "./RecentPaymentsItem";
 import useGetPaymentsList from "@/hooks/getPaymentsList";
 
 export default function RecentPayments() {
-    const { data: paymentsData } = useGetPaymentsList();
-    const [recentPayments, setRecentPayments] = useState<PaymentWithMerchant[]>([]);
+    const { data: paymentsData, isLoading } = useGetPaymentsList();
+    
+    const recentPayments = useMemo<PaymentWithMerchant[]>(() => {
+        if (!paymentsData) return [];
 
-    useEffect(() => {
-        if (paymentsData) {
-            const data = paymentsData as PaymentWithMerchant[];
-            // 최근 5개의 거래만 가져오기 (역순)
-            const recentPaymentsData = [...data].reverse().slice(0, 5);
-            setRecentPayments(recentPaymentsData);
-        } else {
-            setRecentPayments([]);
-        }
+        const data = paymentsData as PaymentWithMerchant[];
+        return [...data].reverse().slice(0, 5);
     }, [paymentsData]);
+
     return (
         <div className="w-[70%] flex flex-col bg-white rounded-lg mb-5 px-10 py-5 shadow-md shadow-slate-500/10">
             <div className="flex justify-between items-center mb-4">
@@ -32,9 +28,17 @@ export default function RecentPayments() {
                     <ArrowUpRight size={16} />
                 </button>
             </div>
-            <RecentPaymentsItem recentPayments={recentPayments} />
+            {isLoading ? (
+                <div className="flex justify-center items-center h-full py-8 animate-spin">
+                    <p className="text-sm text-primary"><LoaderCircle size={32} /></p>
+                </div>
+            ) : recentPayments.length > 0 ? (
+                <RecentPaymentsItem recentPayments={recentPayments} />
+            ) : (
+                <div className="flex justify-center items-center py-8">
+                    <p className="text-sm text-gray">데이터가 없습니다.</p>
+                </div>
+            )}
         </div>
     );
 }
-
-

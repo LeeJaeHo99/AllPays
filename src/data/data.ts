@@ -8,6 +8,29 @@ export const paymentListTableHeader = [
     "결제 시간",
 ];
 
+export const paymentListTableFilter = [
+    {
+        label: "전체",
+        value: "all",
+    },
+    {
+        label: "금액 낮은순 (환율 1450원 적용)",
+        value: "amountAsc",
+    },
+    {
+        label: "금액 높은순 (환율 1450원 적용)",
+        value: "amountDesc",
+    },
+    {
+        label: "결제 시간 최신순",
+        value: "paymentAtDesc",
+    },
+    {
+        label: "결제 시간 오래된순",
+        value: "paymentAtAsc",
+    },
+];
+
 export const paymentListSearchList = [
     {
         label: "상점 이름",
@@ -108,28 +131,5 @@ export const merchantListTableFilter = [
     {
         label: "수정 시간 오래된순",
         value: "updatedAtAsc",
-    },
-];
-
-export const paymentListTableFilter = [
-    {
-        label: "전체",
-        value: "all",
-    },
-    {
-        label: "금액 낮은순 (환율 1450원 적용)",
-        value: "amountAsc",
-    },
-    {
-        label: "금액 높은순 (환율 1450원 적용)",
-        value: "amountDesc",
-    },
-    {
-        label: "결제 시간 최신순",
-        value: "paymentAtDesc",
-    },
-    {
-        label: "결제 시간 오래된순",
-        value: "paymentAtAsc",
     },
 ];

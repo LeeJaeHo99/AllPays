@@ -1,8 +1,18 @@
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
-export default function Pagination({ length, selectedPage, setSelectedPage, handlePreviousPage, handleNextPage }: { length: number, selectedPage: number, setSelectedPage: (page: number) => void, handlePreviousPage: () => void, handleNextPage: () => void }) {
-
-
+export default function Pagination({
+    length,
+    selectedPage,
+    setSelectedPage,
+    handlePreviousPage,
+    handleNextPage,
+}: {
+    length: number;
+    selectedPage: number;
+    setSelectedPage: (page: number) => void;
+    handlePreviousPage: () => void;
+    handleNextPage: () => void;
+}) {
     return (
         <div className="flex justify-center items-center gap-6 mt-4">
             <button

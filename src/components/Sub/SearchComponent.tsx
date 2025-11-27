@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
+import { SearchComponentProps } from "@/types/type";
 
 export default function SearchComponent({ 
     searchList,
@@ -9,23 +10,20 @@ export default function SearchComponent({
     initialSearchType,
     initialSearchValue,
     className = ""
-}: { 
-    searchList: { label: string, value: string }[];
-    onSearch?: (searchType: string, searchValue: string) => void;
-    initialSearchType?: string;
-    initialSearchValue?: string;
-    className?: string;
-}) {
+}: SearchComponentProps) {
     const [searchType, setSearchType] = useState<string>(initialSearchType || searchList[0]?.value || "");
     const [searchValue, setSearchValue] = useState<string>(initialSearchValue || "");
     
-    // 초기값이 변경되면 상태 업데이트
     useEffect(() => {
         if (initialSearchType) {
-            setSearchType(initialSearchType);
+            setTimeout(() => {
+                setSearchType(initialSearchType);
+            }, 0);
         }
         if (initialSearchValue !== undefined) {
-            setSearchValue(initialSearchValue);
+            setTimeout(() => {
+                setSearchValue(initialSearchValue);
+            }, 0);
         }
     }, [initialSearchType, initialSearchValue]);
 
