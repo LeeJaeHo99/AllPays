@@ -2,7 +2,7 @@ export default function PayTypeRank() {
     return (
         <div className="flex flex-col justify-start w-[30%] h-full">
             <h3 className="mb-12 text-sm font-ns-regular text-gray">
-                거래 수단별 TOP 5
+                가맹점 별 거래 횟수 TOP 5
             </h3>
             <div className="flex flex-col gap-8">
                 <PayTypeRankItem rank={1} payType="신용카드" count={8} />

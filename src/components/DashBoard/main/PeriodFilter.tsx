@@ -13,7 +13,7 @@ export default function PeriodFilter({
     onPeriodChange,
 }: PeriodFilterProps) {
     return (
-        <div className="flex items-center gap-2 mb-6">
+        <div className="flex items-center gap-2 w-[50%] mb-6">
             <Btn
                 text="전체"
                 selected={selectedPeriod === "전체"}

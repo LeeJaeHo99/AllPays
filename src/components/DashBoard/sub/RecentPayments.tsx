@@ -1,7 +1,66 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import { PaymentList, PaymentWithMerchant } from "@/types/type";
+import RecentPaymentsItem from "./RecentPaymentsItem";
 
 export default function RecentPayments() {
+    const [recentPayments, setRecentPayments] = useState<PaymentWithMerchant[]>([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const responsePayments = await fetch(
+                    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/payments/list`,
+                    { cache: "force-cache" }
+                );
+                if (!responsePayments.ok) {
+                    throw new Error("데이터를 불러오는데 실패했습니다.");
+                }
+                const result = await responsePayments.json();
+                const data: PaymentList[] = result.data || [];
+                const recentPaymentsData = data.reverse().slice(0, 5);
+
+                // 각 결제에 대해 merchants 정보 가져오기
+                if (recentPaymentsData.length > 0) {
+                    const paymentsWithMerchants = await Promise.all(
+                        recentPaymentsData.map(async (payment: PaymentList) => {
+                            try {
+                                const responseMerchants = await fetch(
+                                    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/merchants/details/${payment.mchtCode}`,
+                                    { cache: "force-cache" }
+                                );
+                                if (!responseMerchants.ok) {
+                                    throw new Error("데이터를 불러오는데 실패했습니다.");
+                                }
+                                const resultMerchants = await responseMerchants.json();
+                                return {
+                                    ...payment,
+                                    mchtName: resultMerchants.data?.mchtName || "",
+                                } as PaymentWithMerchant;
+                            } catch (error) {
+                                console.error(`Failed to fetch merchant for ${payment.mchtCode}:`, error);
+                                return {
+                                    ...payment,
+                                    mchtName: "",
+                                } as PaymentWithMerchant;
+                            }
+                        })
+                    );
+
+                    setRecentPayments(paymentsWithMerchants);
+                } else {
+                    setRecentPayments([]);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        fetchData();
+    }, []);
+    console.log(recentPayments);
     return (
         <div className="w-[70%] flex flex-col bg-white rounded-lg mb-5 px-10 py-5 shadow-md shadow-slate-500/10">
             <div className="flex justify-between items-center mb-4">
@@ -13,56 +72,9 @@ export default function RecentPayments() {
                     <ArrowUpRight size={16} />
                 </button>
             </div>
-            <RecentPaymentsItem />
+            <RecentPaymentsItem recentPayments={recentPayments} />
         </div>
     );
 }
 
-function RecentPaymentsItem() {
-    return (
-        <>
-            <div className="flex justify-between items-center mb-2 px-4 py-2 rounded-md bg-black text-white text-xs font-ns-regular">
-                <span className="w-[20%] text-center">결제 상태</span>
-                <span className="w-[20%] text-center">가게 이름</span>
-                <span className="w-[20%] text-center">결제 수단</span>
-                <span className="w-[20%] text-center">결제 금액</span>
-                <span className="w-[20%] text-center">결제 시간</span>
-            </div>
-            <div className="flex justify-between items-center mb-2 px-4 py-2 pb-4 text-xs font-ns-regular border-b border-slate-200 border-1 border-solid">
-                <span className="w-[20%] text-center">성공</span>
-                <span className="w-[20%] text-center">포치타 커피</span>
-                <span className="w-[20%] text-center">신용카드</span>
-                <span className="w-[20%] text-center">100,000원</span>
-                <span className="w-[20%] text-center">2025-01-01 12:00:00</span>
-            </div>
-            <div className="flex justify-between items-center mb-2 px-4 py-2 pb-4 text-xs font-ns-regular border-b border-slate-200 border-1 border-solid">
-                <span className="w-[20%] text-center">성공</span>
-                <span className="w-[20%] text-center">포치타 커피</span>
-                <span className="w-[20%] text-center">신용카드</span>
-                <span className="w-[20%] text-center">100,000원</span>
-                <span className="w-[20%] text-center">2025-01-01 12:00:00</span>
-            </div>
-            <div className="flex justify-between items-center mb-2 px-4 py-2 pb-4 text-xs font-ns-regular border-b border-slate-200 border-1 border-solid">
-                <span className="w-[20%] text-center">성공</span>
-                <span className="w-[20%] text-center">포치타 커피</span>
-                <span className="w-[20%] text-center">신용카드</span>
-                <span className="w-[20%] text-center">100,000원</span>
-                <span className="w-[20%] text-center">2025-01-01 12:00:00</span>
-            </div>
-            <div className="flex justify-between items-center mb-2 px-4 py-2 pb-4 text-xs font-ns-regular border-b border-slate-200 border-1 border-solid">
-                <span className="w-[20%] text-center">성공</span>
-                <span className="w-[20%] text-center">포치타 커피</span>
-                <span className="w-[20%] text-center">신용카드</span>
-                <span className="w-[20%] text-center">100,000원</span>
-                <span className="w-[20%] text-center">2025-01-01 12:00:00</span>
-            </div>
-            <div className="flex justify-between items-center mb-2 px-4 py-2 pb-4 text-xs font-ns-regular">
-                <span className="w-[20%] text-center">성공</span>
-                <span className="w-[20%] text-center">포치타 커피</span>
-                <span className="w-[20%] text-center">신용카드</span>
-                <span className="w-[20%] text-center">100,000원</span>
-                <span className="w-[20%] text-center">2025-01-01 12:00:00</span>
-            </div>
-        </>
-    );
-}
+

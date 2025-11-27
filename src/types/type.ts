@@ -55,3 +55,7 @@ export interface MchtStatus{
     code: string;
     description: string;
 }
+
+export interface PaymentWithMerchant extends PaymentList {
+    mchtName?: string;
+}

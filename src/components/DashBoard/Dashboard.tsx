@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { PaymentList } from "@/types/type";
+import { useState } from "react";
 import PeriodFilter from "./main/PeriodFilter";
 import PaymentTotal from "./main/PaymentTotal";
 import PaymentChart from "./main/PaymentChart";
@@ -12,23 +11,6 @@ import PayTypeChart from "./sub/PayTypeChart";
 
 export default function Dashboard() {
     const [selectedPeriod, setSelectedPeriod] = useState("전체");
-    const [data, setData] = useState<PaymentList[]>([]);
-
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/payments/list`
-                );
-                const result = await response.json();
-                setData(result.data || []);
-            } catch (error) {
-                setData([]);
-                console.error(error);
-            }
-        }
-        fetchData();
-    }, []);
 
     return (
         <>
@@ -43,18 +25,6 @@ export default function Dashboard() {
                     <PaymentChart />
                     <PayTypeRank />
                 </div>
-
-                {/* {data.map((item) => (
-                <div key={item.paymentCode}>
-                    <p>결제 코드:{item.paymentCode}</p>
-                    <p>상점 코드:{item.mchtCode}</p>
-                    <p>금액:{item.amount}</p>
-                    <p>통화:{item.currency}</p>
-                    <p>결제 타입:{item.payType}</p>
-                    <p>결제 상태:{item.status}</p>
-                    <p>결제 시간:{item.paymentAt}</p>
-                </div>
-            ))} */}
             </div>
             <div className="flex justify-between items-between gap-5">
                 <RecentPayments />

@@ -13,11 +13,11 @@ export default function Header() {
 
     return (
         <header
-            className={`fixed top-0 left-0 right-0 z-999 w-full bg-white shadow-md shadow-slate-500/10 transition-[max-height] duration-500 ease-in-out overflow-hidden ${
+            className={`fixed top-0 left-0 right-0 z-50 w-full bg-white shadow-md shadow-slate-500/10 transition-[max-height] duration-500 ease-in-out overflow-hidden ${
                 isMenuOpen ? "max-h-96" : "max-h-20"
             }`}
         >
-            <div className="inner flex flex-col">
+            <div className="inner max-w-[1200px] flex flex-col">
                 <div
                     className={`flex items-center justify-between h-20 flex-shrink-0 transition-all duration-500 ${
                         isMenuOpen ? "mb-4" : "mb-0"
